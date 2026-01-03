@@ -1,0 +1,222 @@
+/* 52 Apps Tracker - Calm, Minimal Design */
+
+/* ===== Design Tokens ===== */
+:root {
+  /* Colors - Calm, muted palette */
+  --color-bg: #f8f9fa;
+  --color-surface: #ffffff;
+  --color-text-primary: #2d3436;
+  --color-text-secondary: #636e72;
+  --color-text-muted: #b2bec3;
+  --color-border: #dfe6e9;
+
+  /* Status colors */
+  --color-future: #dfe6e9;
+  --color-future-border: #b2bec3;
+  --color-success: #00b894;
+  --color-success-bg: #e8f8f5;
+  --color-didnt-ship: #e17055;
+  --color-didnt-ship-bg: #fdecea;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+
+  /* Typography */
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-size-sm: 0.75rem;
+  --font-size-base: 0.875rem;
+  --font-size-lg: 1rem;
+  --font-size-xl: 1.5rem;
+
+  /* Card dimensions - sized for 13 cards to fit on screen */
+  --card-min-width: 140px;
+  --card-max-width: 180px;
+
+  /* Border radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+}
+
+/* ===== Base Styles ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ===== Layout ===== */
+#app {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: var(--space-xl);
+}
+
+.header h1 {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+/* ===== Quarters Container ===== */
+.quarters-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.quarter {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.quarter-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ===== Cards Grid ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+/* ===== Week Card ===== */
+.week-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.week-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Card metadata (week number, date) */
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.week-number {
+  font-weight: 500;
+}
+
+/* App name input */
+.app-name-input {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  border: none;
+  background: transparent;
+  padding: var(--space-xs) 0;
+  width: 100%;
+  outline: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.app-name-input::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 400;
+}
+
+.app-name-input:focus {
+  border-bottom-color: var(--color-text-secondary);
+}
+
+/* Status container */
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin-top: auto;
+}
+
+/* Status indicator button */
+.status-indicator {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--color-future-border);
+  background: var(--color-future);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.status-indicator:hover {
+  transform: scale(1.1);
+}
+
+.status-indicator:focus {
+  outline: 2px solid var(--color-text-secondary);
+  outline-offset: 2px;
+}
+
+/* Status states */
+.status-indicator.status-future {
+  background: var(--color-future);
+  border-color: var(--color-future-border);
+}
+
+.status-indicator.status-success {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.status-indicator.status-didnt-ship {
+  background: var(--color-didnt-ship);
+  border-color: var(--color-didnt-ship);
+}
+
+/* Status label */
+.status-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* ===== Responsive adjustments ===== */
+@media (max-width: 800px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
