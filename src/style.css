@@ -100,6 +100,12 @@ body {
   border-bottom: 1px solid var(--color-border);
 }
 
+.quarter-months {
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-left: var(--space-sm);
+}
+
 /* ===== Cards Grid ===== */
 .cards-grid {
   display: grid;
@@ -211,10 +217,117 @@ body {
   color: var(--color-text-secondary);
 }
 
+/* ===== Navigation ===== */
+.nav {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.nav-link {
+  font-size: var(--font-size-base);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-text-secondary);
+}
+
+.nav-link.active {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+/* ===== Overview Page ===== */
+.overview-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.overview-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-lg);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-xl);
+}
+
+.overview-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-lg);
+}
+
+.overview-label {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  width: 2.5rem;
+  flex-shrink: 0;
+}
+
+.dots-row {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.overview-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-future-border);
+  background: var(--color-future);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.overview-dot:hover {
+  transform: scale(1.15);
+}
+
+.overview-dot:focus {
+  outline: 2px solid var(--color-text-secondary);
+  outline-offset: 2px;
+}
+
+.overview-dot.status-future {
+  background: var(--color-future);
+  border-color: var(--color-future-border);
+}
+
+.overview-dot.status-success {
+  background: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.overview-dot.status-didnt-ship {
+  background: var(--color-didnt-ship);
+  border-color: var(--color-didnt-ship);
+}
+
 /* ===== Responsive adjustments ===== */
 @media (max-width: 800px) {
   .cards-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .overview-dot {
+    width: 18px;
+    height: 18px;
+  }
+
+  .dots-row {
+    gap: var(--space-xs);
   }
 }
 
