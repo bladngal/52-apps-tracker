@@ -24,10 +24,10 @@
   /* Status colors - refined and sophisticated */
   --color-future: #E8E6DE;
   --color-future-text: #9C9A92;
-  --color-success: #2D5A4A;
-  --color-success-light: #E8F0EC;
-  --color-didnt-ship: #C4785C;
-  --color-didnt-ship-light: #F8EDE8;
+  --color-success: #0D9469;
+  --color-success-light: #E2F5ED;
+  --color-didnt-ship: #C94D4D;
+  --color-didnt-ship-light: #FCEAEA;
 
   /* Spacing scale */
   --space-2xs: 0.125rem;
@@ -306,8 +306,8 @@ body::before {
 
 /* Status indicator - refined pill style */
 .status-indicator {
-  width: 10px;
-  height: 10px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
