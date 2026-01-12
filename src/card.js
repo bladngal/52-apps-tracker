@@ -6,8 +6,11 @@ import { STATUS_INFO, getNextStatus, saveWeeks } from './data.js';
 
 /**
  * Create a week card element
+ * @param {Object} week - Week data object
+ * @param {Array} weeks - All weeks array (for saving)
+ * @param {string} userId - Authenticated user ID
  */
-export function createCard(week, weeks) {
+export function createCard(week, weeks, userId) {
     const card = document.createElement('div');
     card.className = 'week-card';
     card.dataset.week = week.weekNumber;
@@ -28,10 +31,10 @@ export function createCard(week, weeks) {
     nameInput.value = week.appName;
     nameInput.addEventListener('input', (e) => {
         week.appName = e.target.value;
-        saveWeeks(weeks);
+        saveWeeks(userId, weeks);
     });
     nameInput.addEventListener('blur', () => {
-        saveWeeks(weeks);
+        saveWeeks(userId, weeks);
     });
 
     // Status indicator
@@ -60,7 +63,7 @@ export function createCard(week, weeks) {
         statusLabel.textContent = newInfo.label;
 
         // Persist
-        saveWeeks(weeks);
+        saveWeeks(userId, weeks);
     });
 
     statusContainer.appendChild(statusIndicator);

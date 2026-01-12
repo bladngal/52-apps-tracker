@@ -1,8 +1,9 @@
 /**
- * Data model and LocalStorage utilities for 52 Apps Tracker
+ * Data model and Firestore utilities for 52 Apps Tracker
  */
 
-const STORAGE_KEY = '52_apps_2026';
+import { db } from './firebase.js';
+import { doc, setDoc, onSnapshot } from 'firebase/firestore';
 
 // Status values matching the PRD
 export const STATUS = {
@@ -27,26 +28,21 @@ export const STATUS_INFO = {
  */
 function getDateRange(weekNumber) {
   const year = 2026;
-  const jan1 = new Date(year, 0, 1); // Jan 1, 2026
-  
-  // Calculate start of the week (week 1 starts Jan 1)
+  const jan1 = new Date(year, 0, 1);
+
   const weekStart = new Date(jan1);
   weekStart.setDate(jan1.getDate() + (weekNumber - 1) * 7);
-  
-  // Calculate end of the week (6 days later)
+
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekStart.getDate() + 6);
-  
-  // Format the dates
+
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-  
+
   const startMonth = months[weekStart.getMonth()];
   const startDay = weekStart.getDate();
   const endMonth = months[weekEnd.getMonth()];
   const endDay = weekEnd.getDate();
-  
-  // Same month format: "Jan 1–7"
-  // Different month format: "Jan 29–Feb 4"
+
   if (startMonth === endMonth) {
     return `${startMonth} ${startDay}–${endDay}`;
   } else {
@@ -57,7 +53,7 @@ function getDateRange(weekNumber) {
 /**
  * Generate default week data for all 52 weeks
  */
-function generateDefaultWeeks() {
+export function generateDefaultWeeks() {
   const weeks = [];
   for (let i = 1; i <= 52; i++) {
     weeks.push({
@@ -71,35 +67,56 @@ function generateDefaultWeeks() {
 }
 
 /**
- * Load weeks from LocalStorage or generate defaults
+ * Merge stored data with defaults (ensures all 52 weeks exist)
  */
-export function loadWeeks() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      const data = JSON.parse(stored);
-      // Ensure all 52 weeks exist and have valid data
-      const defaults = generateDefaultWeeks();
-      return defaults.map((defaultWeek, i) => ({
-        ...defaultWeek,
-        appName: data[i]?.appName || '',
-        status: data[i]?.status || STATUS.FUTURE
-      }));
-    }
-  } catch (e) {
-    console.error('Error loading from LocalStorage:', e);
+function mergeWithDefaults(storedWeeks) {
+  const defaults = generateDefaultWeeks();
+  if (!storedWeeks || !Array.isArray(storedWeeks)) {
+    return defaults;
   }
-  return generateDefaultWeeks();
+  return defaults.map((defaultWeek, i) => ({
+    ...defaultWeek,
+    appName: storedWeeks[i]?.appName || '',
+    status: storedWeeks[i]?.status || STATUS.FUTURE
+  }));
 }
 
 /**
- * Save weeks to LocalStorage
+ * Subscribe to real-time weeks data from Firestore
+ * @param {string} userId - The authenticated user's ID
+ * @param {Function} callback - Called with weeks array on each update
+ * @returns {Function} Unsubscribe function
  */
-export function saveWeeks(weeks) {
+export function subscribeToWeeks(userId, callback) {
+  const docRef = doc(db, 'users', userId);
+
+  return onSnapshot(docRef, (snapshot) => {
+    const data = snapshot.data();
+    const weeks = mergeWithDefaults(data?.weeks);
+    callback(weeks);
+  }, (error) => {
+    console.error('Error subscribing to weeks:', error);
+    callback(generateDefaultWeeks());
+  });
+}
+
+/**
+ * Save weeks to Firestore
+ * @param {string} userId - The authenticated user's ID
+ * @param {Array} weeks - The weeks array to save
+ */
+export async function saveWeeks(userId, weeks) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(weeks));
-  } catch (e) {
-    console.error('Error saving to LocalStorage:', e);
+    const docRef = doc(db, 'users', userId);
+    // Only save the mutable fields (weekNumber is implicit by index)
+    const weeksData = weeks.map(w => ({
+      weekNumber: w.weekNumber,
+      appName: w.appName,
+      status: w.status
+    }));
+    await setDoc(docRef, { weeks: weeksData }, { merge: true });
+  } catch (error) {
+    console.error('Error saving to Firestore:', error);
   }
 }
 

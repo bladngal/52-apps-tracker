@@ -13,29 +13,32 @@
   <div id="app">
     <header class="header">
       <h1>52 Apps · 2026</h1>
+      <div id="auth-container"></div>
       <nav class="nav">
         <a href="/" class="nav-link active">Details</a>
         <a href="/overview.html" class="nav-link">Overview</a>
       </nav>
     </header>
-    <main class="quarters-container">
-      <section class="quarter" id="q1">
-        <h2 class="quarter-title">Q1 <span class="quarter-months">Jan – Mar</span></h2>
-        <div class="cards-grid" data-quarter="1"></div>
-      </section>
-      <section class="quarter" id="q2">
-        <h2 class="quarter-title">Q2 <span class="quarter-months">Apr – Jun</span></h2>
-        <div class="cards-grid" data-quarter="2"></div>
-      </section>
-      <section class="quarter" id="q3">
-        <h2 class="quarter-title">Q3 <span class="quarter-months">Jul – Sep</span></h2>
-        <div class="cards-grid" data-quarter="3"></div>
-      </section>
-      <section class="quarter" id="q4">
-        <h2 class="quarter-title">Q4 <span class="quarter-months">Oct – Dec</span></h2>
-        <div class="cards-grid" data-quarter="4"></div>
-      </section>
-    </main>
+    <div id="app-content" style="display: none;">
+      <main class="quarters-container">
+        <section class="quarter" id="q1">
+          <h2 class="quarter-title">Q1 <span class="quarter-months">Jan – Mar</span></h2>
+          <div class="cards-grid" data-quarter="1"></div>
+        </section>
+        <section class="quarter" id="q2">
+          <h2 class="quarter-title">Q2 <span class="quarter-months">Apr – Jun</span></h2>
+          <div class="cards-grid" data-quarter="2"></div>
+        </section>
+        <section class="quarter" id="q3">
+          <h2 class="quarter-title">Q3 <span class="quarter-months">Jul – Sep</span></h2>
+          <div class="cards-grid" data-quarter="3"></div>
+        </section>
+        <section class="quarter" id="q4">
+          <h2 class="quarter-title">Q4 <span class="quarter-months">Oct – Dec</span></h2>
+          <div class="cards-grid" data-quarter="4"></div>
+        </section>
+      </main>
+    </div>
   </div>
   <script type="module" src="/src/main.js"></script>
 </body>
