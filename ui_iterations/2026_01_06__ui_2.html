@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>52 Apps - 2026 | Fun & Quirky</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fff9f0;
+            --surface: #ffffff;
+            --text-primary: #2d2a3d;
+            --text-secondary: #6b6490;
+            --text-muted: #9c98b3;
+            --border: #e8e4f0;
+            --accent-yellow: #ffd93d;
+            --accent-pink: #ff6b9d;
+            --accent-blue: #4ecdc4;
+            --accent-purple: #a855f7;
+            --success: #10b981;
+            --missed: #f87171;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: var(--bg);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(255, 107, 157, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(78, 205, 196, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(168, 85, 247, 0.05) 0%, transparent 30%);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Fun Header */
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 30px;
+            border: 3px dashed var(--accent-purple);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: "~";
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 2rem;
+            color: var(--accent-pink);
+            animation: wiggle 2s infinite;
+        }
+
+        header::after {
+            content: "*";
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 2rem;
+            color: var(--accent-blue);
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-10deg); }
+            50% { transform: rotate(10deg); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        nav a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 20px;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background: var(--accent-yellow);
+            border-color: var(--accent-yellow);
+            color: var(--text-primary);
+        }
+
+        /* Quarter Section */
+        .quarter {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 2px solid var(--border);
+            box-shadow: 0 4px 20px rgba(109, 100, 144, 0.08);
+        }
+
+        .quarter-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quarter-emoji {
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            border-radius: 15px;
+        }
+
+        .quarter-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .quarter-period {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: var(--bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            margin-left: auto;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Week Card */
+        .week-card {
+            background: var(--bg);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border: 2px solid transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .week-card:hover {
+            transform: translateY(-4px) rotate(1deg);
+            border-color: var(--accent-purple);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .week-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+        }
+
+        .week-badge.q1 { background: linear-gradient(135deg, #ff6b9d, #ff8fab); }
+        .week-badge.q2 { background: linear-gradient(135deg, #4ecdc4, #45b7aa); }
+        .week-badge.q3 { background: linear-gradient(135deg, #ffd93d, #f0c929); }
+        .week-badge.q4 { background: linear-gradient(135deg, #a855f7, #9333ea); }
+
+        .week-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .app-name {
+            font-family: 'Comic Neue', cursive;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            padding: 0.25rem 0;
+        }
+
+        .app-name::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .status-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+            background: var(--surface);
+        }
+
+        .status-icon:hover {
+            transform: scale(1.2);
+        }
+
+        .status-icon.shipped::after { content: "✓"; color: var(--success); }
+        .status-icon.missed::after { content: "x"; color: var(--missed); }
+        .status-icon.pending::after { content: "?"; color: var(--text-muted); }
+
+        .status-text {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Fun Progress Bar */
+        .progress-section {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            border: 2px solid var(--border);
+        }
+
+        .progress-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            height: 30px;
+            background: var(--bg);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 2%;
+            background: linear-gradient(90deg, var(--accent-pink), var(--accent-purple), var(--accent-blue));
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+
+        .progress-emoji {
+            font-size: 1.2rem;
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-bubble {
+            text-align: center;
+        }
+
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr 1fr; }
+            .stats-row { gap: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>52 Apps in 2026!</h1>
+            <p class="tagline">One app a week keeps the boredom away ~</p>
+            <nav>
+                <a href="#" class="active">Details</a>
+                <a href="#">Overview</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="quarter">
+                <div class="quarter-header">
+                    <div class="quarter-emoji">❄️</div>
+                    <h2 class="quarter-title">Q1</h2>
+                    <span class="quarter-period">Jan - Mar</span>
+                </div>
+                <div class="cards-grid">
+                    <article class="week-card">
+                        <span class="week-badge q1">Week 01</span>
+                        <div class="week-date">Jan 6</div>
+                        <input type="text" class="app-name" placeholder="What's the app?" value="Habit Tracker">
+                        <div class="status-row">
+                            <button class="status-icon shipped"></button>
+                            <span class="status-text">Shipped! Yay!</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <span class="week-badge q1">Week 02</span>
+                        <div class="week-date">Jan 13</div>
+                        <input type="text" class="app-name" placeholder="What's the app?">
+                        <div class="status-row">
+                            <button class="status-icon pending"></button>
+                            <span class="status-text">Coming soon...</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <span class="week-badge q1">Week 03</span>
+                        <div class="week-date">Jan 20</div>
+                        <input type="text" class="app-name" placeholder="What's the app?">
+                        <div class="status-row">
+                            <button class="status-icon pending"></button>
+                            <span class="status-text">Coming soon...</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <span class="week-badge q1">Week 04</span>
+                        <div class="week-date">Jan 27</div>
+                        <input type="text" class="app-name" placeholder="What's the app?">
+                        <div class="status-row">
+                            <button class="status-icon pending"></button>
+                            <span class="status-text">Coming soon...</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="quarter">
+                <div class="quarter-header">
+                    <div class="quarter-emoji">🌸</div>
+                    <h2 class="quarter-title">Q2</h2>
+                    <span class="quarter-period">Apr - Jun</span>
+                </div>
+                <div class="cards-grid">
+                    <article class="week-card">
+                        <span class="week-badge q2">Week 14</span>
+                        <div class="week-date">Apr 6</div>
+                        <input type="text" class="app-name" placeholder="What's the app?">
+                        <div class="status-row">
+                            <button class="status-icon pending"></button>
+                            <span class="status-text">Coming soon...</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <span class="week-badge q2">Week 15</span>
+                        <div class="week-date">Apr 13</div>
+                        <input type="text" class="app-name" placeholder="What's the app?">
+                        <div class="status-row">
+                            <button class="status-icon pending"></button>
+                            <span class="status-text">Coming soon...</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <section class="progress-section">
+            <h3 class="progress-title">Your Epic Journey</h3>
+            <div class="progress-bar">
+                <div class="progress-fill">
+                    <span class="progress-emoji">🚀</span>
+                </div>
+            </div>
+            <div class="stats-row">
+                <div class="stat-bubble">
+                    <div class="stat-num">1</div>
+                    <div class="stat-label">Shipped</div>
+                </div>
+                <div class="stat-bubble">
+                    <div class="stat-num">0</div>
+                    <div class="stat-label">Missed</div>
+                </div>
+                <div class="stat-bubble">
+                    <div class="stat-num">51</div>
+                    <div class="stat-label">To Go!</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>52 Apps - 2026 | Bold & Colorful</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f1a;
+            --surface: #1a1a2e;
+            --surface-light: #252542;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b8;
+            --text-muted: #6b6b80;
+            --neon-pink: #ff2d95;
+            --neon-blue: #00d4ff;
+            --neon-green: #00ff88;
+            --neon-yellow: #ffea00;
+            --neon-purple: #bf00ff;
+            --neon-orange: #ff6b00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Bold Header */
+        header {
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, var(--surface) 0%, var(--surface-light) 100%);
+            border-radius: 24px;
+            border: 2px solid var(--surface-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-green), var(--neon-yellow));
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 60px rgba(255, 45, 149, 0.3);
+        }
+
+        .year-badge {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--bg);
+            background: var(--neon-green);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        nav a {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            border: 2px solid var(--surface-light);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        nav a.active {
+            background: var(--neon-pink);
+            border-color: var(--neon-pink);
+            color: white;
+            box-shadow: 0 0 30px rgba(255, 45, 149, 0.4);
+        }
+
+        /* Quarter Section */
+        .quarter {
+            margin-bottom: 2rem;
+        }
+
+        .quarter-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding: 1.5rem 2rem;
+            background: var(--surface);
+            border-radius: 16px;
+            border-left: 4px solid;
+        }
+
+        .quarter:nth-child(1) .quarter-header { border-left-color: var(--neon-pink); }
+        .quarter:nth-child(2) .quarter-header { border-left-color: var(--neon-blue); }
+        .quarter:nth-child(3) .quarter-header { border-left-color: var(--neon-green); }
+        .quarter:nth-child(4) .quarter-header { border-left-color: var(--neon-yellow); }
+
+        .quarter-num {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .quarter:nth-child(1) .quarter-num { color: var(--neon-pink); }
+        .quarter:nth-child(2) .quarter-num { color: var(--neon-blue); }
+        .quarter:nth-child(3) .quarter-num { color: var(--neon-green); }
+        .quarter:nth-child(4) .quarter-num { color: var(--neon-yellow); }
+
+        .quarter-info {
+            flex: 1;
+        }
+
+        .quarter-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quarter-period {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .quarter-stats {
+            text-align: right;
+        }
+
+        .quarter-progress {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .quarter-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        /* Week Card */
+        .week-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 2px solid var(--surface-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .week-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--surface-light);
+            transition: background 0.3s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-blue);
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.15);
+        }
+
+        .week-card:hover::before {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+        }
+
+        .week-card.shipped::before {
+            background: var(--neon-green);
+        }
+
+        .week-card.missed::before {
+            background: var(--neon-orange);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .week-num {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--text-muted);
+        }
+
+        .week-date {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: var(--surface-light);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+        }
+
+        .app-name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            border: none;
+            background: transparent;
+            width: 100%;
+            outline: none;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid var(--surface-light);
+            transition: border-color 0.3s ease;
+        }
+
+        .app-name::placeholder {
+            color: var(--text-muted);
+        }
+
+        .app-name:focus {
+            border-bottom-color: var(--neon-blue);
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+
+        .status-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 2px solid var(--surface-light);
+            background: transparent;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            color: var(--text-muted);
+            transition: all 0.2s ease;
+        }
+
+        .status-btn:hover {
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .status-btn.shipped {
+            background: var(--neon-green);
+            border-color: var(--neon-green);
+            color: var(--bg);
+        }
+
+        .status-btn.missed {
+            background: var(--neon-orange);
+            border-color: var(--neon-orange);
+            color: var(--bg);
+        }
+
+        .status-text {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Stats Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px solid var(--surface-light);
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .stat-card:nth-child(1) .stat-value { color: var(--neon-green); }
+        .stat-card:nth-child(2) .stat-value { color: var(--neon-orange); }
+        .stat-card:nth-child(3) .stat-value { color: var(--neon-blue); }
+        .stat-card:nth-child(4) .stat-value { color: var(--neon-pink); }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 900px) {
+            h1 { font-size: 2.5rem; }
+            .dashboard { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 600px) {
+            h1 { font-size: 2rem; }
+            .cards-grid { grid-template-columns: 1fr; }
+            .quarter-header { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>52 Apps</h1>
+            <span class="year-badge">2026 Challenge</span>
+            <nav>
+                <a href="#" class="active">Details</a>
+                <a href="#">Overview</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="quarter">
+                <div class="quarter-header">
+                    <span class="quarter-num">Q1</span>
+                    <div class="quarter-info">
+                        <h2 class="quarter-title">First Quarter</h2>
+                        <span class="quarter-period">January - March</span>
+                    </div>
+                    <div class="quarter-stats">
+                        <div class="quarter-progress">1/13</div>
+                        <div class="quarter-label">Shipped</div>
+                    </div>
+                </div>
+                <div class="cards-grid">
+                    <article class="week-card shipped">
+                        <div class="card-top">
+                            <span class="week-num">01</span>
+                            <span class="week-date">Jan 6</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name" value="Habit Tracker">
+                        <div class="status-row">
+                            <button class="status-btn shipped">✓</button>
+                            <span class="status-text">Shipped</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <div class="card-top">
+                            <span class="week-num">02</span>
+                            <span class="week-date">Jan 13</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name">
+                        <div class="status-row">
+                            <button class="status-btn">○</button>
+                            <span class="status-text">Pending</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <div class="card-top">
+                            <span class="week-num">03</span>
+                            <span class="week-date">Jan 20</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name">
+                        <div class="status-row">
+                            <button class="status-btn">○</button>
+                            <span class="status-text">Pending</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <div class="card-top">
+                            <span class="week-num">04</span>
+                            <span class="week-date">Jan 27</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name">
+                        <div class="status-row">
+                            <button class="status-btn">○</button>
+                            <span class="status-text">Pending</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <section class="quarter">
+                <div class="quarter-header">
+                    <span class="quarter-num">Q2</span>
+                    <div class="quarter-info">
+                        <h2 class="quarter-title">Second Quarter</h2>
+                        <span class="quarter-period">April - June</span>
+                    </div>
+                    <div class="quarter-stats">
+                        <div class="quarter-progress">0/13</div>
+                        <div class="quarter-label">Shipped</div>
+                    </div>
+                </div>
+                <div class="cards-grid">
+                    <article class="week-card">
+                        <div class="card-top">
+                            <span class="week-num">14</span>
+                            <span class="week-date">Apr 6</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name">
+                        <div class="status-row">
+                            <button class="status-btn">○</button>
+                            <span class="status-text">Pending</span>
+                        </div>
+                    </article>
+                    <article class="week-card">
+                        <div class="card-top">
+                            <span class="week-num">15</span>
+                            <span class="week-date">Apr 13</span>
+                        </div>
+                        <input type="text" class="app-name" placeholder="Enter app name">
+                        <div class="status-row">
+                            <button class="status-btn">○</button>
+                            <span class="status-text">Pending</span>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <div class="dashboard">
+            <div class="stat-card">
+                <div class="stat-value">1</div>
+                <div class="stat-label">Shipped</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Missed</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">51</div>
+                <div class="stat-label">Remaining</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">2%</div>
+                <div class="stat-label">Complete</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

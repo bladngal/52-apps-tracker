@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Codebase Map</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; display: flex; height: 100vh; }
+        #sidebar { width: 300px; background: #f5f5f7; border-right: 1px solid #ddd; padding: 20px; box-shadow: 2px 0 5px rgba(0,0,0,0.05); overflow-y: auto; }
+        #main { flex: 1; padding: 40px; overflow-y: auto; background: #fff; }
+        .node { margin-left: 20px; }
+        .folder { cursor: pointer; user-select: none; display: flex; align-items: center; padding: 4px 0; }
+        .folder:hover { color: #0066cc; }
+        .folder::before { content: '📁'; margin-right: 8px; font-size: 1.2em; }
+        .file { margin-left: 24px; padding: 2px 0; color: #555; display: flex; justify-content: space-between; font-size: 0.9em; }
+        .file::before { content: '📄'; margin-right: 8px; }
+        .hidden { display: none; }
+        .size { color: #999; font-size: 0.85em; margin-left: 10px; }
+        h1 { margin-top: 0; color: #333; }
+        .stat-card { background: white; padding: 15px; border-radius: 8px; margin-bottom: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .bar-container { margin-top: 10px; }
+        .bar-row { display: flex; align-items: center; margin-bottom: 4px; font-size: 0.85em; }
+        .bar-label { width: 60px; }
+        .bar { height: 8px; background: #0066cc; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div id="sidebar">
+        <div class="stat-card">
+            <h3>Summary</h3>
+            <div id="stats">Loading...</div>
+        </div>
+        <div class="stat-card">
+            <h3>File Types</h3>
+            <div id="type-chart"></div>
+        </div>
+    </div>
+    <div id="main">
+        <h1>Codebase Structure</h1>
+        <div id="tree"></div>
+    </div>
+
+    <script>
+        const data = {"name": "52_apps_tracker", "type": "dir", "children": [{"name": "docs", "type": "dir", "children": [{"name": "52_apps_PRD.md", "type": "file", "size": 3319, "ext": ".md"}]}, {"name": "node_modules", "type": "dir", "children": [{"name": "@esbuild", "type": "dir", "children": [{"name": "darwin-arm64", "type": "dir", "children": [{"name": "bin", "type": "dir", "children": [{"name": "esbuild", "type": "file", "size": 9934834, "ext": "no-ext"}]}, {"name": "package.json", "type": "file", "size": 383, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 145, "ext": ".md"}]}]}, {"name": "@rollup", "type": "dir", "children": [{"name": "rollup-darwin-arm64", "type": "dir", "children": [{"name": "package.json", "type": "file", "size": 451, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 90, "ext": ".md"}, {"name": "rollup.darwin-arm64.node", "type": "file", "size": 1813376, "ext": ".node"}]}]}, {"name": "@types", "type": "dir", "children": [{"name": "estree", "type": "dir", "children": [{"name": "flow.d.ts", "type": "file", "size": 4801, "ext": ".ts"}, {"name": "index.d.ts", "type": "file", "size": 18944, "ext": ".ts"}, {"name": "LICENSE", "type": "file", "size": 1141, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 829, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 458, "ext": ".md"}]}]}, {"name": "esbuild", "type": "dir", "children": [{"name": "bin", "type": "dir", "children": [{"name": "esbuild", "type": "file", "size": 9934834, "ext": "no-ext"}]}, {"name": "lib", "type": "dir", "children": [{"name": "main.d.ts", "type": "file", "size": 23392, "ext": ".ts"}, {"name": "main.js", "type": "file", "size": 88706, "ext": ".js"}]}, {"name": "install.js", "type": "file", "size": 11160, "ext": ".js"}, {"name": "LICENSE.md", "type": "file", "size": 1069, "ext": ".md"}, {"name": "package.json", "type": "file", "size": 1490, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 175, "ext": ".md"}]}, {"name": "fdir", "type": "dir", "children": [{"name": "dist", "type": "dir", "children": [{"name": "index.cjs", "type": "file", "size": 18210, "ext": ".cjs"}, {"name": "index.d.cts", "type": "file", "size": 5129, "ext": ".cts"}, {"name": "index.d.mts", "type": "file", "size": 5129, "ext": ".mts"}, {"name": "index.mjs", "type": "file", "size": 17225, "ext": ".mjs"}]}, {"name": "LICENSE", "type": "file", "size": 1053, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 2694, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 3851, "ext": ".md"}]}, {"name": "nanoid", "type": "dir", "children": [{"name": "async", "type": "dir", "children": [{"name": "index.browser.cjs", "type": "file", "size": 2692, "ext": ".cjs"}, {"name": "index.browser.js", "type": "file", "size": 984, "ext": ".js"}, {"name": "index.cjs", "type": "file", "size": 2870, "ext": ".cjs"}, {"name": "index.d.ts", "type": "file", "size": 1505, "ext": ".ts"}, {"name": "index.js", "type": "file", "size": 982, "ext": ".js"}, {"name": "index.native.js", "type": "file", "size": 820, "ext": ".js"}, {"name": "package.json", "type": "file", "size": 233, "ext": ".json"}]}, {"name": "bin", "type": "dir", "children": [{"name": "nanoid.cjs", "type": "file", "size": 1129, "ext": ".cjs"}]}, {"name": "non-secure", "type": "dir", "children": [{"name": "index.cjs", "type": "file", "size": 1114, "ext": ".cjs"}, {"name": "index.d.ts", "type": "file", "size": 983, "ext": ".ts"}, {"name": "index.js", "type": "file", "size": 497, "ext": ".js"}, {"name": "package.json", "type": "file", "size": 99, "ext": ".json"}]}, {"name": "url-alphabet", "type": "dir", "children": [{"name": "index.cjs", "type": "file", "size": 280, "ext": ".cjs"}, {"name": "index.js", "type": "file", "size": 110, "ext": ".js"}, {"name": "package.json", "type": "file", "size": 99, "ext": ".json"}]}, {"name": "index.browser.cjs", "type": "file", "size": 2834, "ext": ".cjs"}, {"name": "index.browser.js", "type": "file", "size": 1064, "ext": ".js"}, {"name": "index.cjs", "type": "file", "size": 3359, "ext": ".cjs"}, {"name": "index.d.cts", "type": "file", "size": 2252, "ext": ".cts"}, {"name": "index.d.ts", "type": "file", "size": 2252, "ext": ".ts"}, {"name": "index.js", "type": "file", "size": 1326, "ext": ".js"}, {"name": "LICENSE", "type": "file", "size": 1095, "ext": "no-ext"}, {"name": "nanoid.js", "type": "file", "size": 169, "ext": ".js"}, {"name": "package.json", "type": "file", "size": 2283, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 1552, "ext": ".md"}]}, {"name": "picocolors", "type": "dir", "children": [{"name": "LICENSE", "type": "file", "size": 787, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 552, "ext": ".json"}, {"name": "picocolors.browser.js", "type": "file", "size": 598, "ext": ".js"}, {"name": "picocolors.d.ts", "type": "file", "size": 138, "ext": ".ts"}, {"name": "picocolors.js", "type": "file", "size": 2663, "ext": ".js"}, {"name": "README.md", "type": "file", "size": 622, "ext": ".md"}, {"name": "types.d.ts", "type": "file", "size": 1013, "ext": ".ts"}]}, {"name": "picomatch", "type": "dir", "children": [{"name": "lib", "type": "dir", "children": [{"name": "constants.js", "type": "file", "size": 4458, "ext": ".js"}, {"name": "parse.js", "type": "file", "size": 27544, "ext": ".js"}, {"name": "picomatch.js", "type": "file", "size": 9881, "ext": ".js"}, {"name": "scan.js", "type": "file", "size": 9189, "ext": ".js"}, {"name": "utils.js", "type": "file", "size": 1994, "ext": ".js"}]}, {"name": "index.js", "type": "file", "size": 479, "ext": ".js"}, {"name": "LICENSE", "type": "file", "size": 1091, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 1953, "ext": ".json"}, {"name": "posix.js", "type": "file", "size": 60, "ext": ".js"}, {"name": "README.md", "type": "file", "size": 28608, "ext": ".md"}]}, {"name": "postcss", "type": "dir", "children": [{"name": "lib", "type": "dir", "children": [{"name": "at-rule.d.ts", "type": "file", "size": 3426, "ext": ".ts"}, {"name": "at-rule.js", "type": "file", "size": 471, "ext": ".js"}, {"name": "comment.d.ts", "type": "file", "size": 1750, "ext": ".ts"}, {"name": "comment.js", "type": "file", "size": 203, "ext": ".js"}, {"name": "container.d.ts", "type": "file", "size": 14113, "ext": ".ts"}, {"name": "container.js", "type": "file", "size": 10647, "ext": ".js"}, {"name": "css-syntax-error.d.ts", "type": "file", "size": 6517, "ext": ".ts"}, {"name": "css-syntax-error.js", "type": "file", "size": 3402, "ext": ".js"}, {"name": "declaration.d.ts", "type": "file", "size": 3903, "ext": ".ts"}, {"name": "declaration.js", "type": "file", "size": 495, "ext": ".js"}, {"name": "document.d.ts", "type": "file", "size": 1954, "ext": ".ts"}, {"name": "document.js", "type": "file", "size": 654, "ext": ".js"}, {"name": "fromJSON.d.ts", "type": "file", "size": 162, "ext": ".ts"}, {"name": "fromJSON.js", "type": "file", "size": 1506, "ext": ".js"}, {"name": "input.d.ts", "type": "file", "size": 5196, "ext": ".ts"}, {"name": "input.js", "type": "file", "size": 6752, "ext": ".js"}, {"name": "lazy-result.d.ts", "type": "file", "size": 5007, "ext": ".ts"}, {"name": "lazy-result.js", "type": "file", "size": 13562, "ext": ".js"}, {"name": "list.d.ts", "type": "file", "size": 1426, "ext": ".ts"}, {"name": "list.js", "type": "file", "size": 1227, "ext": ".js"}, {"name": "map-generator.js", "type": "file", "size": 9721, "ext": ".js"}, {"name": "no-work-result.d.ts", "type": "file", "size": 1573, "ext": ".ts"}, {"name": "no-work-result.js", "type": "file", "size": 2624, "ext": ".js"}, {"name": "node.d.ts", "type": "file", "size": 14753, "ext": ".ts"}, {"name": "node.js", "type": "file", "size": 10719, "ext": ".js"}, {"name": "parse.d.ts", "type": "file", "size": 135, "ext": ".ts"}, {"name": "parse.js", "type": "file", "size": 1147, "ext": ".js"}, {"name": "parser.js", "type": "file", "size": 14852, "ext": ".js"}, {"name": "postcss.d.mts", "type": "file", "size": 1049, "ext": ".mts"}, {"name": "postcss.d.ts", "type": "file", "size": 11461, "ext": ".ts"}, {"name": "postcss.js", "type": "file", "size": 2898, "ext": ".js"}, {"name": "postcss.mjs", "type": "file", "size": 980, "ext": ".mjs"}, {"name": "previous-map.d.ts", "type": "file", "size": 1827, "ext": ".ts"}, {"name": "previous-map.js", "type": "file", "size": 3984, "ext": ".js"}, {"name": "processor.d.ts", "type": "file", "size": 3415, "ext": ".ts"}, {"name": "processor.js", "type": "file", "size": 1738, "ext": ".js"}, {"name": "result.d.ts", "type": "file", "size": 4416, "ext": ".ts"}, {"name": "result.js", "type": "file", "size": 738, "ext": ".js"}, {"name": "root.d.ts", "type": "file", "size": 2323, "ext": ".ts"}, {"name": "root.js", "type": "file", "size": 1239, "ext": ".js"}, {"name": "rule.d.ts", "type": "file", "size": 2967, "ext": ".ts"}, {"name": "rule.js", "type": "file", "size": 569, "ext": ".js"}, {"name": "stringifier.d.ts", "type": "file", "size": 1430, "ext": ".ts"}, {"name": "stringifier.js", "type": "file", "size": 8220, "ext": ".js"}, {"name": "stringify.d.ts", "type": "file", "size": 165, "ext": ".ts"}, {"name": "stringify.js", "type": "file", "size": 213, "ext": ".js"}, {"name": "symbols.js", "type": "file", "size": 91, "ext": ".js"}, {"name": "terminal-highlight.js", "type": "file", "size": 1399, "ext": ".js"}, {"name": "tokenize.js", "type": "file", "size": 6538, "ext": ".js"}, {"name": "warn-once.js", "type": "file", "size": 256, "ext": ".js"}, {"name": "warning.d.ts", "type": "file", "size": 2994, "ext": ".ts"}, {"name": "warning.js", "type": "file", "size": 739, "ext": ".js"}]}, {"name": "LICENSE", "type": "file", "size": 1095, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 2496, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 1200, "ext": ".md"}]}, {"name": "rollup", "type": "dir", "children": [{"name": "dist", "type": "dir", "children": [{"name": "bin", "type": "dir", "children": [{"name": "rollup", "type": "file", "size": 82217, "ext": "no-ext"}]}, {"name": "es", "type": "dir", "children": [{"name": "shared", "type": "dir", "children": [{"name": "node-entry.js", "type": "file", "size": 930243, "ext": ".js"}, {"name": "parseAst.js", "type": "file", "size": 83726, "ext": ".js"}, {"name": "watch.js", "type": "file", "size": 251128, "ext": ".js"}]}, {"name": "getLogFilter.js", "type": "file", "size": 2046, "ext": ".js"}, {"name": "package.json", "type": "file", "size": 17, "ext": ".json"}, {"name": "parseAst.js", "type": "file", "size": 293, "ext": ".js"}, {"name": "rollup.js", "type": "file", "size": 441, "ext": ".js"}]}, {"name": "shared", "type": "dir", "children": [{"name": "fsevents-importer.js", "type": "file", "size": 884, "ext": ".js"}, {"name": "index.js", "type": "file", "size": 241272, "ext": ".js"}, {"name": "loadConfigFile.js", "type": "file", "size": 22909, "ext": ".js"}, {"name": "parseAst.js", "type": "file", "size": 92661, "ext": ".js"}, {"name": "rollup.js", "type": "file", "size": 929376, "ext": ".js"}, {"name": "watch-cli.js", "type": "file", "size": 18478, "ext": ".js"}, {"name": "watch.js", "type": "file", "size": 10556, "ext": ".js"}]}, {"name": "getLogFilter.d.ts", "type": "file", "size": 171, "ext": ".ts"}, {"name": "getLogFilter.js", "type": "file", "size": 2188, "ext": ".js"}, {"name": "loadConfigFile.d.ts", "type": "file", "size": 471, "ext": ".ts"}, {"name": "loadConfigFile.js", "type": "file", "size": 705, "ext": ".js"}, {"name": "native.js", "type": "file", "size": 3901, "ext": ".js"}, {"name": "parseAst.d.ts", "type": "file", "size": 134, "ext": ".ts"}, {"name": "parseAst.js", "type": "file", "size": 506, "ext": ".js"}, {"name": "rollup.d.ts", "type": "file", "size": 35167, "ext": ".ts"}, {"name": "rollup.js", "type": "file", "size": 4666, "ext": ".js"}]}, {"name": "LICENSE.md", "type": "file", "size": 35231, "ext": ".md"}, {"name": "package.json", "type": "file", "size": 11758, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 10005, "ext": ".md"}]}, {"name": "source-map-js", "type": "dir", "children": [{"name": "lib", "type": "dir", "children": [{"name": "array-set.js", "type": "file", "size": 3197, "ext": ".js"}, {"name": "base64-vlq.js", "type": "file", "size": 4714, "ext": ".js"}, {"name": "base64.js", "type": "file", "size": 1540, "ext": ".js"}, {"name": "binary-search.js", "type": "file", "size": 4249, "ext": ".js"}, {"name": "mapping-list.js", "type": "file", "size": 2339, "ext": ".js"}, {"name": "quick-sort.js", "type": "file", "size": 4068, "ext": ".js"}, {"name": "source-map-consumer.d.ts", "type": "file", "size": 40, "ext": ".ts"}, {"name": "source-map-consumer.js", "type": "file", "size": 41580, "ext": ".js"}, {"name": "source-map-generator.d.ts", "type": "file", "size": 41, "ext": ".ts"}, {"name": "source-map-generator.js", "type": "file", "size": 14933, "ext": ".js"}, {"name": "source-node.d.ts", "type": "file", "size": 33, "ext": ".ts"}, {"name": "source-node.js", "type": "file", "size": 13808, "ext": ".js"}, {"name": "util.js", "type": "file", "size": 15403, "ext": ".js"}]}, {"name": "LICENSE", "type": "file", "size": 1526, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 2548, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 26040, "ext": ".md"}, {"name": "source-map.d.ts", "type": "file", "size": 3408, "ext": ".ts"}, {"name": "source-map.js", "type": "file", "size": 405, "ext": ".js"}]}, {"name": "tinyglobby", "type": "dir", "children": [{"name": "dist", "type": "dir", "children": [{"name": "index.cjs", "type": "file", "size": 14186, "ext": ".cjs"}, {"name": "index.d.cts", "type": "file", "size": 4641, "ext": ".cts"}, {"name": "index.d.mts", "type": "file", "size": 4641, "ext": ".mts"}, {"name": "index.mjs", "type": "file", "size": 12881, "ext": ".mjs"}]}, {"name": "LICENSE", "type": "file", "size": 1076, "ext": "no-ext"}, {"name": "package.json", "type": "file", "size": 1818, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 932, "ext": ".md"}]}, {"name": "vite", "type": "dir", "children": [{"name": "bin", "type": "dir", "children": [{"name": "openChrome.applescript", "type": "file", "size": 2691, "ext": ".applescript"}, {"name": "vite.js", "type": "file", "size": 2542, "ext": ".js"}]}, {"name": "dist", "type": "dir", "children": [{"name": "client", "type": "dir", "children": [{"name": "client.mjs", "type": "file", "size": 32405, "ext": ".mjs"}, {"name": "env.mjs", "type": "file", "size": 643, "ext": ".mjs"}]}, {"name": "node", "type": "dir", "children": [{"name": "chunks", "type": "dir", "children": [{"name": "dep-3RmXg9uo.js", "type": "file", "size": 13038, "ext": ".js"}, {"name": "dep-C9BXG1mU.js", "type": "file", "size": 19503, "ext": ".js"}, {"name": "dep-CvfTChi5.js", "type": "file", "size": 339559, "ext": ".js"}, {"name": "dep-D4NMHUTW.js", "type": "file", "size": 1499847, "ext": ".js"}, {"name": "dep-DWMUTS1A.js", "type": "file", "size": 235611, "ext": ".js"}]}, {"name": "cli.js", "type": "file", "size": 29164, "ext": ".js"}, {"name": "constants.js", "type": "file", "size": 4186, "ext": ".js"}, {"name": "index.d.ts", "type": "file", "size": 153369, "ext": ".ts"}, {"name": "index.js", "type": "file", "size": 6677, "ext": ".js"}, {"name": "module-runner.d.ts", "type": "file", "size": 10612, "ext": ".ts"}, {"name": "module-runner.js", "type": "file", "size": 53266, "ext": ".js"}, {"name": "moduleRunnerTransport.d-DJ_mE5sf.d.ts", "type": "file", "size": 2969, "ext": ".ts"}]}, {"name": "node-cjs", "type": "dir", "children": [{"name": "publicUtils.cjs", "type": "file", "size": 106320, "ext": ".cjs"}]}]}, {"name": "misc", "type": "dir", "children": [{"name": "false.js", "type": "file", "size": 21, "ext": ".js"}, {"name": "true.js", "type": "file", "size": 20, "ext": ".js"}]}, {"name": "types", "type": "dir", "children": [{"name": "internal", "type": "dir", "children": [{"name": "cssPreprocessorOptions.d.ts", "type": "file", "size": 1960, "ext": ".ts"}, {"name": "lightningcssOptions.d.ts", "type": "file", "size": 520, "ext": ".ts"}]}, {"name": "customEvent.d.ts", "type": "file", "size": 1312, "ext": ".ts"}, {"name": "hmrPayload.d.ts", "type": "file", "size": 1282, "ext": ".ts"}, {"name": "hot.d.ts", "type": "file", "size": 1060, "ext": ".ts"}, {"name": "import-meta.d.ts", "type": "file", "size": 249, "ext": ".ts"}, {"name": "importGlob.d.ts", "type": "file", "size": 1909, "ext": ".ts"}, {"name": "importMeta.d.ts", "type": "file", "size": 871, "ext": ".ts"}, {"name": "metadata.d.ts", "type": "file", "size": 885, "ext": ".ts"}, {"name": "package.json", "type": "file", "size": 109, "ext": ".json"}]}, {"name": "client.d.ts", "type": "file", "size": 5109, "ext": ".ts"}, {"name": "index.cjs", "type": "file", "size": 2717, "ext": ".cjs"}, {"name": "index.d.cts", "type": "file", "size": 209, "ext": ".cts"}, {"name": "LICENSE.md", "type": "file", "size": 115630, "ext": ".md"}, {"name": "package.json", "type": "file", "size": 5251, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 1152, "ext": ".md"}]}]}, {"name": "src", "type": "dir", "children": [{"name": "auth.js", "type": "file", "size": 4111, "ext": ".js"}, {"name": "card.js", "type": "file", "size": 2542, "ext": ".js"}, {"name": "data.js", "type": "file", "size": 3658, "ext": ".js"}, {"name": "firebase.js", "type": "file", "size": 748, "ext": ".js"}, {"name": "main.js", "type": "file", "size": 1934, "ext": ".js"}, {"name": "overview.js", "type": "file", "size": 2480, "ext": ".js"}, {"name": "style.css", "type": "file", "size": 12854, "ext": ".css"}]}, {"name": "ui_iterations", "type": "dir", "children": [{"name": "2026_01_06__ui_1.html", "type": "file", "size": 11565, "ext": ".html"}, {"name": "2026_01_06__ui_2.html", "type": "file", "size": 14664, "ext": ".html"}, {"name": "2026_01_06__ui_3.html", "type": "file", "size": 16455, "ext": ".html"}]}, {"name": "CLAUDE.md", "type": "file", "size": 1470, "ext": ".md"}, {"name": "firebase.json", "type": "file", "size": 234, "ext": ".json"}, {"name": "index.html", "type": "file", "size": 1649, "ext": ".html"}, {"name": "overview.html", "type": "file", "size": 1694, "ext": ".html"}, {"name": "package-lock.json", "type": "file", "size": 74078, "ext": ".json"}, {"name": "package.json", "type": "file", "size": 289, "ext": ".json"}, {"name": "README.md", "type": "file", "size": 1886, "ext": ".md"}]};
+        
+        function formatSize(bytes) {
+            if (bytes === 0) return '0 B';
+            const k = 1024;
+            const sizes = ['B', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function buildTree(node, container) {
+            const el = document.createElement('div');
+            el.className = 'node';
+            
+            if (node.type === 'dir') {
+                const title = document.createElement('div');
+                title.className = 'folder';
+                title.textContent = node.name;
+                
+                const childrenContainer = document.createElement('div');
+                // Auto-expand mostly root, collapse deep
+                if (depth > 2) childrenContainer.classList.add('hidden');
+                
+                title.onclick = () => childrenContainer.classList.toggle('hidden');
+                
+                el.appendChild(title);
+                el.appendChild(childrenContainer);
+                
+                // Sort folders top
+                node.children.sort((a, b) => (a.type === b.type ? 0 : a.type === 'dir' ? -1 : 1));
+                
+                node.children.forEach(child => {
+                    depth++;
+                    buildTree(child, childrenContainer);
+                    depth--;
+                });
+            } else {
+                const file = document.createElement('div');
+                file.className = 'file';
+                file.innerHTML = `<span>${node.name}</span><span class="size">${formatSize(node.size)}</span>`;
+                el.appendChild(file);
+            }
+            
+            container.appendChild(el);
+        }
+
+        // Stats calculation
+        let totalFiles = 0;
+        let totalSize = 0;
+        const typeStats = {};
+
+        function calculateStats(node) {
+            if (node.type === 'file') {
+                totalFiles++;
+                totalSize += node.size;
+                typeStats[node.ext] = (typeStats[node.ext] || 0) + 1;
+            } else if (node.children) {
+                node.children.forEach(calculateStats);
+            }
+        }
+
+        // Init
+        let depth = 0;
+        calculateStats(data);
+        buildTree(data, document.getElementById('tree'));
+        
+        document.getElementById('stats').innerHTML = `
+            Files: ${totalFiles}<br>
+            Size: ${formatSize(totalSize)}
+        `;
+
+        const sortedTypes = Object.entries(typeStats)
+            .sort(([,a], [,b]) => b - a)
+            .slice(0, 5);
+            
+        const maxType = sortedTypes[0][1];
+        
+        document.getElementById('type-chart').innerHTML = sortedTypes.map(([ext, count]) => `
+            <div class="bar-row">
+                <span class="bar-label">${ext}</span>
+                <div class="bar" style="width: ${count/maxType * 100}px"></div>
+                <span style="margin-left:8px">${count}</span>
+            </div>
+        `).join('');
+    </script>
+</body>
+</html>
