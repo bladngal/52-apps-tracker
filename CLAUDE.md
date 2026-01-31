@@ -10,6 +10,15 @@ npm run build    # Production build to dist/
 npm run preview  # Preview production build
 ```
 
+## Deployment
+
+**IMPORTANT**: After pushing to git, always deploy to Firebase:
+```bash
+npm run build && firebase deploy
+```
+
+The app is hosted at: https://apps-tracker-da3fb.web.app
+
 ## Architecture
 
 This is a vanilla JS + Vite app for tracking 52 weekly app completions throughout 2026. No framework, no backend - just ES modules and LocalStorage.
