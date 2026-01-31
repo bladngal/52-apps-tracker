@@ -80,7 +80,7 @@ function renderAuthUI(container) {
     </div>
     <div class="auth-signed-in" style="display: none;">
       <div class="auth-user">
-        <img class="auth-avatar" src="" alt="Profile" />
+        <img class="auth-avatar" src="" alt="Profile" referrerpolicy="no-referrer" />
         <span class="auth-name"></span>
       </div>
       <button class="auth-button auth-sign-out">Sign out</button>
